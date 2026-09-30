@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>duee</title>
+<style>
+:root{--bg:#0b1220;--panel:#121e30;--panel-2:#17263b;--tx:#edf4ff;--mt:#96a9c1;--line:#26384f;--cell:#101b2b;--ac:#6c91ff;--ac-hover:#82a2ff;--card:#142136;--bd:#2a3c55;--in:#1b2b42;--shadow:0 16px 40px rgba(0,0,0,.18);color-scheme:dark}
+:root[data-theme=light]{--bg:#f4f7fc;--panel:#fff;--panel-2:#f7f9fd;--tx:#17243b;--mt:#64748b;--line:#e5ebf4;--cell:#fff;--ac:#456ee8;--ac-hover:#335bd4;--card:#fff;--bd:#dce4ef;--in:#f7f9fd;--shadow:0 16px 40px rgba(39,63,102,.09);color-scheme:light}
+html{scroll-padding-top:90px}
+*{box-sizing:border-box}
+body{min-height:100vh;margin:0;background:radial-gradient(circle at 15% -10%,rgba(108,145,255,.11),transparent 36%),var(--bg);color:var(--tx);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;letter-spacing:.005em}
+header{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:14px max(22px,calc((100vw - 1360px)/2));border-bottom:1px solid var(--bd);background:color-mix(in srgb,var(--panel) 90%,transparent);backdrop-filter:blur(18px)}
+header h1{display:flex;align-items:center;gap:10px;flex:none;margin:0;font-size:17px;font-weight:750;letter-spacing:-.025em}
+.brand-mark{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:linear-gradient(145deg,#7198ff,#526cdd);box-shadow:0 6px 15px rgba(83,112,220,.25);font-size:18px}
+nav{display:flex;gap:4px;flex:1;flex-wrap:wrap;align-items:center}
+button,select,input,textarea{font:inherit;color:var(--tx);background:var(--in);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;outline:none;transition:border-color .15s,background .15s,box-shadow .15s,transform .15s}
+button{cursor:pointer;font-weight:600}
+button:hover{border-color:var(--ac);background:var(--panel-2)}
+button:active{transform:translateY(1px)}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 25%,transparent)}
+input::placeholder,textarea::placeholder{color:var(--mt);opacity:.85}
+input[type=checkbox]{accent-color:var(--ac)}
+nav button{border:0;background:transparent;color:var(--mt);padding:9px 14px}
+nav button:hover{background:var(--in);color:var(--tx)}
+nav button.on,button.pri{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:0 5px 14px color-mix(in srgb,var(--ac) 25%,transparent)}
+nav button.on:hover,button.pri:hover{background:var(--ac-hover);border-color:var(--ac-hover)}
+.badge{font-size:12px;color:var(--mt)}
+header .badge{white-space:nowrap}
+main{padding:26px 22px 50px;max-width:1404px;margin:auto}
+.bar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:18px}
+.bar b{font-size:16px;font-weight:700;letter-spacing:-.02em}
+.bar .sp{flex:1}
+.bar select{min-width:150px}
+.scroll{overflow-x:auto;border:1px solid var(--bd);border-radius:18px;background:var(--cell);box-shadow:var(--shadow)}
+.scroll::-webkit-scrollbar{height:10px}.scroll::-webkit-scrollbar-thumb{background:var(--bd);border:2px solid var(--cell);border-radius:10px}
+.gw{display:grid;grid-template-columns:80px repeat(7,minmax(126px,1fr));min-width:1010px}
+.hd{background:var(--panel-2);text-align:center;font-weight:700;padding:13px 4px 11px;border-left:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hd small{display:block;font-weight:500;color:var(--mt);font-size:12px;margin-top:2px}
+.hd.today{color:var(--ac);box-shadow:inset 0 -3px var(--ac)}
+.tc{background:var(--panel-2);color:var(--mt)}
+.tc div{height:80px;display:flex;align-items:flex-start;padding:6px 8px;font-size:11px;border-top:1px solid var(--line);white-space:nowrap}
+.col{position:relative;background:var(--cell) linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 80px;border-left:1px solid var(--line);cursor:pointer}
+.col:hover{background-color:color-mix(in srgb,var(--ac) 5%,var(--cell))}
+.les{position:absolute;left:4px;right:4px;color:#1a2a3c;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:6px 8px;font-weight:700;overflow:hidden;border:1px solid rgba(39,58,84,.12);border-radius:11px;box-shadow:0 3px 9px rgba(9,27,48,.09);cursor:pointer}
+.les:hover{filter:brightness(.97);box-shadow:0 5px 15px rgba(9,27,48,.18)}
+.les small{display:block;color:#52657a;font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.les .hw-preview{display:flex;flex-direction:column;align-items:flex-start;gap:0;font-size:11px;font-weight:600;white-space:nowrap;min-width:0;max-width:100%;padding:1px 4px;border-radius:5px;cursor:pointer}
+.les .hw-preview.h{background:#ffe0e5;color:#922c43}.les .hw-preview.m{background:#fff0c8;color:#7d5413}.les .hw-preview.l{background:#d9f4e4;color:#176448}
+.les .hw-title{max-width:100%;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.les .hw-timer{flex:none;font-size:10px;font-variant-numeric:tabular-nums;color:inherit}
+.les .hw-timer .late{color:#b42338}
+.chip{position:absolute;left:5px;right:5px;height:38px;border:1px solid;border-radius:8px;padding:3px 7px;font-size:11px;overflow:hidden;z-index:2;box-shadow:0 3px 9px rgba(0,0,0,.1);cursor:pointer}
+.chip-meta,.chip-title{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.chip-meta{font-size:10px;font-weight:750;opacity:.9}.chip-title{font-weight:600}
+.chip.h{background:#472734;color:#ffc3cf;border-color:#96566b}.chip.m{background:#473a24;color:#ffe3a1;border-color:#8d7446}.chip.l{background:#1e413a;color:#baf1d3;border-color:#3c8068}
+:root[data-theme=light] .chip.h{background:#fff0f3;color:#9e2845;border-color:#f0b8c7}:root[data-theme=light] .chip.m{background:#fff7e3;color:#885c12;border-color:#e9d18d}:root[data-theme=light] .chip.l{background:#e8f8ee;color:#176c4b;border-color:#b6dfc5}
+.chip.done{opacity:.45;text-decoration:line-through}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-top:4px solid var(--c,#888);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.card[data-a=openhomework]{cursor:pointer}.card[data-a=openhomework]:hover{border-color:var(--ac);box-shadow:0 18px 42px color-mix(in srgb,var(--ac) 13%,transparent)}
+.card h3{margin:0;flex:1;font-size:17px;letter-spacing:-.02em}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:8px 0}
+.row>input,.row>textarea{flex:1;min-width:0}
+h3{font-size:22px;letter-spacing:-.03em;margin:0 0 16px}
+h4{margin:22px 0 9px;font-size:11px;color:var(--mt);text-transform:uppercase;letter-spacing:.1em;font-weight:750}
+.note{display:flex;gap:8px;background:var(--in);border:1px solid var(--bd);border-radius:10px;padding:8px 10px;margin:7px 0;white-space:pre-wrap;word-break:break-word}
+.note span{flex:1}
+.x{background:transparent;border:0;color:var(--mt);padding:3px 7px;box-shadow:none}
+.x:hover{color:var(--tx);background:var(--panel-2)}
+.task{display:flex;gap:10px;align-items:center;background:var(--in);border:1px solid var(--bd);border-left:4px solid var(--p);border-radius:11px;padding:10px 11px;margin:8px 0;cursor:pointer}
+.task:hover{background:var(--panel-2);border-color:var(--ac);border-left-color:var(--p)}
+.task div{flex:1;min-width:0}.task b{font-weight:650}.task small{display:block;color:var(--mt);margin-top:2px}
+.task.done b{text-decoration:line-through;opacity:.55}
+.cd{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ac);font-size:12px;white-space:nowrap}.cd.late{color:#ee6b7c}
+.task input{width:auto}
+.h{--p:#e86d7d}.m{--p:#e7b65d}.l{--p:#69baab}
+.set{max-width:680px;background:var(--card);border:1px solid var(--bd);border-radius:17px;padding:10px 22px 22px;box-shadow:var(--shadow)}
+.set label{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--bd)}
+.set label select,.set label input:not([type=checkbox]){min-width:180px}
+.ov{position:fixed;inset:0;background:rgba(5,13,27,.72);display:flex;align-items:center;justify-content:center;z-index:9;padding:16px;backdrop-filter:blur(5px)}
+.md{background:var(--card);border:1px solid var(--bd);border-radius:20px;padding:22px;width:100%;max-width:470px;max-height:90vh;overflow:auto;box-shadow:0 28px 70px rgba(0,0,0,.3)}
+.md h3{margin-bottom:14px}.md h4{margin-top:22px}
+.md label{display:block;margin:12px 0 5px;color:var(--mt);font-size:12px;font-weight:650}.md input,.md select{width:100%}
+.md .check-label{display:flex;align-items:center;gap:8px;margin:15px 0}.md .check-label input{width:auto}
+.empty{color:var(--mt);padding:14px 0}
+.homework-form{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 22px;padding:16px;background:var(--card);border:1px solid var(--bd);border-radius:15px;box-shadow:var(--shadow)}
+.homework-form input,.homework-form select{min-width:150px;flex:1}
+.homework-form input[type=datetime-local]{min-width:190px}
+.homework-list{max-width:850px}
+.md .homework-list{margin-top:8px}.md .homework-list .task{align-items:flex-start}
+.hint{color:var(--mt);font-size:12px;margin:4px 0 10px}
+@media(max-width:700px){header{gap:10px;padding:12px 14px}header h1{font-size:15px}nav{order:3;flex-basis:100%}nav button{padding:8px 10px;font-size:12px}header .badge{margin-left:auto}main{padding:18px 12px 36px}.bar b{font-size:14px}.bar .sp{display:none}.bar select{min-width:120px}.task{flex-wrap:wrap}.cd{margin-left:24px}.set{padding:8px 15px}.set label select,.set label input:not([type=checkbox]){min-width:125px}}
+</style>
+</head>
+<body>
+<header>
+  <h1><span class="brand-mark" aria-hidden="true">📅</span><span class="brand-title">duee</span></h1>
+  <nav id="nav"></nav>
+  <span class="badge" id="sync"></span>
+</header>
+<main id="app"></main>
+<script>
+const L={ru:{sched:'Расписание',subj:'Предметы',sett:'Настройки',today:'Сегодня',days:['Пн','Вт','Ср','Чт','Пт','Сб','Вс'],addL:'+ Урок',editL:'Урок',subject:'Предмет',day:'День',start:'Начало',len:'Длительность (ч)',note:'Заметка (аудитория, тип)',save:'Сохранить',del:'Удалить',cancel:'Отмена',tasks:'Задания',title:'Название',due:'Дедлайн',prio:'Приоритет',h:'Высокий',m:'Средний',l:'Низкий',notes:'Заметки',addNote:'Добавить заметку',tri:'Триместр',newTri:'+ Триместр',lang:'Язык',theme:'Тема',dark:'Тёмная',light:'Светлая',sh:'День начинается в',eh:'День заканчивается в',notif:'Уведомления о дедлайнах',cloud:'☁ синхронизировано',local:'💾 только локально',over:'просрочено',d:'д',none:'Нет заданий',up:'Ближайшие дедлайны',newSub:'+ Предмет',rename:'Название триместра',delTri:'Удалить триместр',noSub:'Добавьте предметы — они появятся здесь',add:'Добавить',confirm:'Удалить?',lessonsHint:'Нажмите на ячейку, чтобы добавить урок',tt:'Триместры'},
+en:{sched:'Schedule',subj:'Subjects',sett:'Settings',today:'Today',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],addL:'+ Lesson',editL:'Lesson',subject:'Subject',day:'Day',start:'Start',len:'Length (h)',note:'Note (room, type)',save:'Save',del:'Delete',cancel:'Cancel',tasks:'Tasks',title:'Title',due:'Deadline',prio:'Priority',h:'High',m:'Medium',l:'Low',notes:'Notes',addNote:'Add note',tri:'Trimester',newTri:'+ Trimester',lang:'Language',theme:'Theme',dark:'Dark',light:'Light',sh:'Day starts at',eh:'Day ends at',notif:'Deadline notifications',cloud:'☁ synced',local:'💾 local only',over:'overdue',d:'d',none:'No tasks',up:'Upcoming deadlines',newSub:'+ Subject',rename:'Trimester name',delTri:'Delete trimester',noSub:'Add subjects — they will appear here',add:'Add',confirm:'Delete?',lessonsHint:'Click a cell to add a lesson',tt:'Trimesters'}};
+Object.assign(L.ru,{homework:'Домашние задания',addHomework:'Добавить ДЗ',homeworkTitle:'Что задано',noDeadline:'Без дедлайна',lessonHomework:'ДЗ к этому уроку',homeworkHint:'ДЗ относится к выбранному уроку на этой неделе. Повторяющийся урок останется в расписании следующих недель.',selectSubject:'Выберите предмет',allHomework:'Все задания'});
+Object.assign(L.en,{homework:'Homework',addHomework:'Add homework',homeworkTitle:'Assignment',noDeadline:'No deadline',lessonHomework:'Homework for this lesson',homeworkHint:'Homework belongs to this lesson in the selected week. The recurring lesson stays on future weeks.',selectSubject:'Select a subject',allHomework:'All assignments'});
+Object.assign(L.ru,{lessonAction:'Что сделать с уроком?',editLesson:'Редактировать урок',deadlineRequired:'Укажите дедлайн, чтобы ДЗ появилось в расписании.',deadlineAuto:'Дедлайн подставлен по времени урока. Его можно изменить.',subjectsHint:'Нажмите на карточку предмета, чтобы добавить ДЗ.'});
+Object.assign(L.en,{lessonAction:'What would you like to do?',editLesson:'Edit lesson',deadlineRequired:'Set a deadline to show this homework in the schedule.',deadlineAuto:'The deadline matches the lesson time. You can change it.',subjectsHint:'Click a subject card to add homework.'});
+Object.assign(L.ru,{cellAction:'Что добавить?',addLesson:'Добавить урок',cellDeadlineAuto:'Дедлайн подставлен по времени ячейки. Его можно изменить.',up:'Невыполненные задания',lessonsHint:'Нажмите на ячейку, чтобы добавить урок или ДЗ.'});
+Object.assign(L.en,{cellAction:'What would you like to add?',addLesson:'Add lesson',cellDeadlineAuto:'The deadline matches the selected time. You can change it.',up:'Open assignments',lessonsHint:'Click a cell to add a lesson or homework.'});
+Object.assign(L.ru,{editHomework:'Редактировать ДЗ',deleteHomework:'Удалить ДЗ',completed:'Выполнено'});
+Object.assign(L.en,{editHomework:'Edit homework',deleteHomework:'Delete homework',completed:'Completed'});
+const PAL=['#c8daf8','#d9d2e9','#fff2cc','#f4cccc','#d0e0e3','#d9ead3','#fce5cd'];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const def=()=>({tri:[{id:'t1',name:'Триместр 1',lessons:[]}],cur:'t1',subs:[],tasks:[],set:{sh:9,eh:20,lang:'ru',theme:'dark',notif:false}});
+let S=def(),tab='sched',off=0,sync='local',docRef=null,timer=null,H=80;
+try{const r=localStorage.getItem('sched-v1');if(r)S=Object.assign(def(),JSON.parse(r))}catch(e){}
+const T=()=>L[S.set.lang]||L.ru;
+const tri=()=>S.tri.find(t=>t.id===S.cur)||S.tri[0];
+const sub=id=>S.subs.find(s=>s.id===id);
+function save(){try{localStorage.setItem('sched-v1',JSON.stringify(S))}catch(e){}
+ clearTimeout(timer);timer=setTimeout(()=>{if(docRef)docRef.set({json:JSON.stringify(S)}).then(()=>{sync='cloud';badge()}).catch(()=>{})},700)}
+function apply(){document.documentElement.dataset.theme=S.set.theme;document.documentElement.lang=S.set.lang}
+function badge(){document.getElementById('sync').textContent=T()[sync]}
+(async()=>{try{if(!window.claude)return;const u=await claude.use('user'),d=await claude.use('db');if(!u||!d)return;
+ const id=await u.id();if(!id)return;docRef=d.collection('data/users/'+id).doc('state');
+ const s=await docRef.get();
+ if(s.exists){S=Object.assign(def(),JSON.parse(s.data().json));try{localStorage.setItem('sched-v1',JSON.stringify(S))}catch(e){}}
+ else await docRef.set({json:JSON.stringify(S)});
+ sync='cloud';apply();render()}catch(e){}})();
+
+const cd=due=>{const ms=new Date(due)-Date.now();if(ms<0)return T().over;const s=Math.floor(ms/1e3),d=Math.floor(s/86400);
+ return (d?d+T().d+' ':'')+[Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,'0')).join(':')};
+const mon=()=>{const d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()-((d.getDay()+6)%7)+off*7);return d};
+const fmt=(d,o)=>d.toLocaleDateString(S.set.lang,o);
+const pad=n=>String(n).padStart(2,'0');
+const dateKey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const lessonDate=day=>{const d=mon();d.setDate(d.getDate()+day);return dateKey(d)};
+const sortedTasks=tasks=>tasks.slice().sort((a,b)=>Number(a.done)-Number(b.done)||(a.due&&b.due?new Date(a.due)-new Date(b.due):a.due?-1:b.due?1:0));
+const localDateTime=d=>`${dateKey(d)}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+const hourOpts=(a,b,v)=>{let o='';for(let h=a;h<=b;h++)o+=`<option value="${h}"${h==v?' selected':''}>${pad(h)}:00</option>`;return o};
+
+function taskRow(t,showSub){const s=sub(t.sub);
+ return `<div class="task ${t.prio||'m'} ${t.done?'done':''}" data-a="editTask" data-id="${t.id}"><input type="checkbox" data-a="done" data-id="${t.id}"${t.done?' checked':''} aria-label="${T().completed}">
+ <div><b>${esc(t.title)}</b><small>${showSub&&s?esc(s.name)+' · ':''}${t.due?fmt(new Date(t.due),{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):T().noDeadline}</small></div>
+ ${t.done||!t.due?'':`<span class="cd" data-due="${esc(t.due)}">${cd(t.due)}</span>`}</div>`}
+
+function schedule(){
+ const m=mon(),t=T(),tr=tri(),today=new Date().toDateString(),weekStart=dateKey(m),weekEnd=lessonDate(6);
+ const deadlines=S.tasks.map(k=>k.due?new Date(k.due):null).filter(d=>d&&!Number.isNaN(+d)&&dateKey(d)>=weekStart&&dateKey(d)<=weekEnd);
+ const sh=Math.min(S.set.sh,...deadlines.map(d=>d.getHours())),eh=Math.max(S.set.eh,...deadlines.map(d=>d.getHours()+1)),n=eh-sh;
+ let hd='<div class="hd">⏱</div>',cols='',tc='';
+ for(let h=sh;h<eh;h++)tc+=`<div>${pad(h)}:00 – ${pad(h)}:59</div>`;
+ for(let i=0;i<7;i++){const d=new Date(m);d.setDate(m.getDate()+i);const key=dateKey(d);
+  hd+=`<div class="hd ${d.toDateString()===today?'today':''}">${t.days[i]}<small>${d.getDate()}.${pad(d.getMonth()+1)}</small></div>`;
+  let c=tr.lessons.filter(l=>l.day===i&&l.h<eh&&l.h+l.len>sh).map(l=>{const s=sub(l.sub),a=Math.max(l.h,sh),b=Math.min(l.h+l.len,eh);
+   const hw=S.tasks.filter(k=>!k.done&&k.lessonId===l.id&&k.lessonDate===key);
+   const first=hw[0];
+   const due=first?.due?new Date(first.due):null;
+   const preview=first?`<span class="hw-preview ${['h','m','l'].includes(first.prio)?first.prio:'m'}" data-a="editTask" data-id="${first.id}" title="${esc(hw.map(k=>k.title).join('; '))}"><span class="hw-title">📚 ${esc(first.title)}${hw.length>1?' +'+(hw.length-1):''}</span><span class="hw-timer">⏱ ${due?`${pad(due.getHours())}:${pad(due.getMinutes())} · <span data-due="${esc(first.due)}">${cd(first.due)}</span>`:t.noDeadline}</span></span>`:'';
+   return `<div class="les" data-a="editL" data-id="${l.id}" data-date="${key}" style="top:${(a-sh)*H}px;height:${(b-a)*H}px;background:${s?.color||'#ddd'}">${esc(s?.name||'?')}${l.note?`<small>${esc(l.note)}</small>`:''}${preview}</div>`}).join('');
+  c+=S.tasks.filter(k=>{if(!k.due||dateKey(new Date(k.due))!==key)return false;
+   const lesson=tr.lessons.find(l=>l.id===k.lessonId),due=new Date(k.due),first=lesson&&S.tasks.find(x=>!x.done&&x.lessonId===lesson.id&&x.lessonDate===key);
+   return !(lesson&&!k.done&&first?.id===k.id&&k.lessonDate===key&&lesson.day===i&&due.getHours()>=lesson.h&&due.getHours()<lesson.h+lesson.len)
+  }).map(k=>{const dd=new Date(k.due),hh=dd.getHours()+dd.getMinutes()/60,top=Math.max(0,Math.min((hh-sh)*H,n*H-40)),subject=sub(k.sub);
+   return `<div class="chip ${['h','m','l'].includes(k.prio)?k.prio:'m'} ${k.done?'done':''}" data-a="editTask" data-id="${k.id}" style="top:${top}px" title="${esc(`${pad(dd.getHours())}:${pad(dd.getMinutes())} · ${subject?.name||''} · ${k.title}`)}"><span class="chip-meta">⏰ ${pad(dd.getHours())}:${pad(dd.getMinutes())} · ${esc(subject?.name||t.subject)}</span><span class="chip-title">${esc(k.title)}</span></div>`}).join('');
+  cols+=`<div class="col" data-a="cell" data-day="${i}" data-start="${sh}" data-end="${eh}" style="height:${n*H}px">${c}</div>`}
+ const up=sortedTasks(S.tasks.filter(k=>!k.done));
+ return `<div class="bar"><button data-a="prev">‹</button><button data-a="today">${t.today}</button><button data-a="next">›</button>
+ <b>${fmt(m,{day:'numeric',month:'short'})} – ${fmt(new Date(+m+6*864e5),{day:'numeric',month:'short'})}</b><span class="sp"></span>
+ <select data-a="tri">${S.tri.map(x=>`<option value="${x.id}"${x.id===S.cur?' selected':''}>${esc(x.name)}</option>`).join('')}</select>
+ <button class="pri" data-a="addL">${t.addL}</button></div>
+ <div class="scroll"><div class="gw">${hd}<div class="tc" style="grid-row:2">${tc}</div>${cols}</div></div>
+ <p class="badge">${t.lessonsHint}</p><h4>${t.up}</h4>${up.map(k=>taskRow(k,1)).join('')||`<div class="empty">${t.none}</div>`}`}
+
+function subjects(){const t=T();
+ return `<div class="bar"><input id="ns" placeholder="${t.subject}" style="max-width:240px"><button class="pri" data-a="addsub">${t.newSub}</button></div>
+ <p class="hint">${t.subjectsHint}</p><div class="cards">${S.subs.map(s=>`<div class="card" style="--c:${s.color}" data-s="${s.id}" data-a="openhomework">
+ <div class="row"><h3>${esc(s.name)}</h3><input type="color" value="${s.color}" data-a="color" style="width:40px;padding:0"><button class="x" data-a="delsub">🗑</button></div>
+ <h4>${t.tasks}</h4>${sortedTasks(S.tasks.filter(k=>k.sub===s.id)).map(k=>taskRow(k)).join('')}
+ <div class="row"><button class="pri" data-a="openhomework">${t.addHomework}</button></div>
+ <h4>${t.notes}</h4>${(s.notes||[]).map(x=>`<div class="note"><span>${esc(x.text)}</span><button class="x" data-a="delnote" data-id="${x.id}">×</button></div>`).join('')}
+ <div class="row"><textarea class="nt" rows="2" placeholder="${t.addNote}"></textarea><button data-a="addnote">+</button></div></div>`).join('')||`<div class="empty">${t.noSub}</div>`}</div>`}
+
+function settings(){const t=T(),s=S.set,tr=tri();
+ return `<div class="set"><label>${t.sh}<select data-k="sh">${hourOpts(0,22,s.sh)}</select></label>
+ <label>${t.eh}<select data-k="eh">${hourOpts(1,24,s.eh)}</select></label>
+ <label>${t.lang}<select data-k="lang"><option value="ru"${s.lang=='ru'?' selected':''}>Русский</option><option value="en"${s.lang=='en'?' selected':''}>English</option></select></label>
+ <label>${t.theme}<select data-k="theme"><option value="dark"${s.theme=='dark'?' selected':''}>${t.dark}</option><option value="light"${s.theme=='light'?' selected':''}>${t.light}</option></select></label>
+ <label>${t.notif}<input type="checkbox" data-k="notif"${s.notif?' checked':''}></label>
+ <h4>${t.tt}</h4><label>${t.rename}<input id="tn" value="${esc(tr.name)}" data-a="rentri"></label>
+ <div class="row"><button data-a="addtri">${t.newTri}</button><button data-a="deltri"${S.tri.length<2?' disabled':''}>${t.delTri}</button></div>
+ <p class="badge">${t[sync]}</p></div>`}
+
+function homework(){const t=T();
+ return `<h3>${t.homework}</h3><div class="homework-form"><select id="hwSubject" aria-label="${t.subject}"><option value="">${t.selectSubject}</option>${S.subs.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select>
+ <input id="hwTitle" placeholder="${t.homeworkTitle}" aria-label="${t.homeworkTitle}"><input id="hwDue" type="datetime-local" aria-label="${t.due}"><select id="hwPriority" aria-label="${t.prio}"><option value="h">${t.h}</option><option value="m" selected>${t.m}</option><option value="l">${t.l}</option></select><button class="pri" data-a="addhomework">${t.addHomework}</button></div>
+ <h4>${t.allHomework}</h4><div class="homework-list">${sortedTasks(S.tasks).map(k=>taskRow(k,1)).join('')||`<div class="empty">${t.none}</div>`}</div>`}
+
+function render(){const t=T();apply();
+ document.getElementById('nav').innerHTML=[['sched',t.sched],['homework',t.homework],['subj',t.subj],['sett',t.sett]].map(([k,v])=>`<button data-a="tab" data-t="${k}" class="${tab===k?'on':''}">${v}</button>`).join('');
+ document.getElementById('app').innerHTML=tab==='sched'?schedule():tab==='homework'?homework():tab==='subj'?subjects():settings();badge()}
+
+function homeworkModal(sid,options={}){const t=T(),subject=sub(sid);if(sid&&!subject)return;
+ const ov=document.createElement('div');ov.className='ov';
+ ov.innerHTML=`<div class="md"><h3>${t.addHomework}</h3><p class="hint">${subject?esc(subject.name)+' · ':''}${options.lessonId?t.deadlineAuto:options.due?t.cellDeadlineAuto:t.deadlineRequired}</p>
+ <form id="hwForm">${subject?'':`<label for="newHwSubject">${t.subject}</label><input id="newHwSubject" list="hwSubjects" required autocomplete="off"><datalist id="hwSubjects">${S.subs.map(s=>`<option value="${esc(s.name)}">`).join('')}</datalist>`}
+ <label for="newHwTitle">${t.homeworkTitle}</label><input id="newHwTitle" required maxlength="250" autocomplete="off">
+ <label for="newHwDue">${t.due}</label><input id="newHwDue" type="datetime-local" required value="${esc(options.due||'')}">
+ <label for="newHwPriority">${t.prio}</label><select id="newHwPriority"><option value="h">${t.h}</option><option value="m" selected>${t.m}</option><option value="l">${t.l}</option></select>
+ <div class="row" style="margin-top:18px"><button class="pri" type="submit">${t.addHomework}</button><button id="cancelHw" type="button">${t.cancel}</button></div></form></div>`;
+ document.body.appendChild(ov);const q=s=>ov.querySelector(s),close=()=>ov.remove();
+ ov.onclick=e=>{if(e.target===ov)close()};q('#cancelHw').onclick=close;q('#newHwTitle').focus();
+ q('#hwForm').onsubmit=e=>{e.preventDefault();const title=q('#newHwTitle').value.trim(),due=q('#newHwDue').value,name=subject?.name||q('#newHwSubject').value.trim();if(!title||!due||!name)return;
+  let selected=subject||S.subs.find(s=>s.name.toLowerCase()===name.toLowerCase());
+  if(!selected){selected={id:uid(),name,color:PAL[S.subs.length%PAL.length],notes:[]};S.subs.push(selected)}
+  const task={id:uid(),sub:selected.id,title,due:new Date(due).toISOString(),prio:q('#newHwPriority').value,done:false};
+  if(options.lessonId){task.lessonId=options.lessonId;task.lessonDate=options.lessonDate}
+  S.tasks.push(task);save();close();render()}}
+
+function taskEditModal(id){const t=T(),task=S.tasks.find(k=>k.id===id);if(!task)return;
+ const ov=document.createElement('div');ov.className='ov';
+ ov.innerHTML=`<div class="md"><h3>${t.editHomework}</h3><form id="editTaskForm">
+ <label for="editSubject">${t.subject}</label><select id="editSubject" required>${S.subs.map(s=>`<option value="${s.id}"${s.id===task.sub?' selected':''}>${esc(s.name)}</option>`).join('')}</select>
+ <label for="editTitle">${t.homeworkTitle}</label><input id="editTitle" required maxlength="250" value="${esc(task.title)}">
+ <label for="editDue">${t.due} (${t.noDeadline.toLowerCase()})</label><input id="editDue" type="datetime-local" value="${task.due?esc(localDateTime(new Date(task.due))):''}">
+ <label for="editPriority">${t.prio}</label><select id="editPriority"><option value="h"${task.prio==='h'?' selected':''}>${t.h}</option><option value="m"${!task.prio||task.prio==='m'?' selected':''}>${t.m}</option><option value="l"${task.prio==='l'?' selected':''}>${t.l}</option></select>
+ <label class="check-label"><input id="editDone" type="checkbox"${task.done?' checked':''}>${t.completed}</label>
+ <div class="row"><button class="pri" type="submit">${t.save}</button><button id="cancelEdit" type="button">${t.cancel}</button><button id="deleteEdit" type="button" style="margin-left:auto">${t.deleteHomework}</button></div></form></div>`;
+ document.body.appendChild(ov);const q=s=>ov.querySelector(s),close=()=>ov.remove();
+ ov.onclick=e=>{if(e.target===ov)close()};q('#cancelEdit').onclick=close;q('#editTitle').focus();
+ q('#editTaskForm').onsubmit=e=>{e.preventDefault();const title=q('#editTitle').value.trim(),subject=q('#editSubject').value,due=q('#editDue').value;if(!title||!subject)return;
+  if(task.sub!==subject){delete task.lessonId;delete task.lessonDate}
+  Object.assign(task,{title,sub:subject,due:due?new Date(due).toISOString():null,prio:q('#editPriority').value,done:q('#editDone').checked});
+  save();close();render()};
+ q('#deleteEdit').onclick=()=>{if(!confirm(t.confirm))return;S.tasks=S.tasks.filter(k=>k.id!==id);save();close();render()}}
+
+function lessonActionModal(id,date){const t=T(),l=tri().lessons.find(x=>x.id===id);if(!l)return;
+ const ov=document.createElement('div');ov.className='ov';
+ ov.innerHTML=`<div class="md"><h3>${t.lessonAction}</h3><p class="hint">${esc(sub(l.sub)?.name||t.subject)} · ${fmt(new Date(date+'T12:00:00'),{day:'numeric',month:'long'})} · ${pad(l.h)}:00</p>
+ <div class="row"><button id="chooseEdit">${t.editLesson}</button><button class="pri" id="chooseHomework">${t.addHomework}</button><button id="chooseCancel">${t.cancel}</button></div></div>`;
+ document.body.appendChild(ov);const close=()=>ov.remove();ov.onclick=e=>{if(e.target===ov)close()};
+ ov.querySelector('#chooseCancel').onclick=close;
+ ov.querySelector('#chooseEdit').onclick=()=>{close();lessonModal(id,undefined,undefined,date)};
+ ov.querySelector('#chooseHomework').onclick=()=>{close();homeworkModal(l.sub,{lessonId:id,lessonDate:date,due:`${date}T${pad(l.h)}:00`})}}
+
+function cellActionModal(day,hour,due){const t=T(),date=lessonDate(day);
+ const ov=document.createElement('div');ov.className='ov';
+ ov.innerHTML=`<div class="md"><h3>${t.cellAction}</h3><p class="hint">${fmt(new Date(date+'T12:00:00'),{day:'numeric',month:'long'})} · ${(due||`${date}T${pad(hour)}:00`).slice(11,16)}</p>
+ <div class="row"><button id="cellLesson">${t.addLesson}</button><button class="pri" id="cellHomework">${t.addHomework}</button><button id="cellCancel">${t.cancel}</button></div></div>`;
+ document.body.appendChild(ov);const close=()=>ov.remove();ov.onclick=e=>{if(e.target===ov)close()};
+ ov.querySelector('#cellCancel').onclick=close;
+ ov.querySelector('#cellLesson').onclick=()=>{close();lessonModal(null,day,hour)};
+ ov.querySelector('#cellHomework').onclick=()=>{close();homeworkModal(null,{due:due||`${date}T${pad(hour)}:00`})}}
+
+function lessonModal(id,day,hour,selectedDate){const t=T(),tr=tri(),l=tr.lessons.find(x=>x.id===id)||{day,h:hour,len:1,note:'',sub:''};
+ const key=selectedDate||lessonDate(l.day);
+ const lessonTasks=()=>sortedTasks(S.tasks.filter(k=>k.lessonId===id&&k.lessonDate===key)).map(k=>taskRow(k,false)).join('')||`<div class="empty">${t.none}</div>`;
+ const ov=document.createElement('div');ov.className='ov';
+ ov.innerHTML=`<div class="md"><h3>${t.editL}</h3><label>${t.subject}</label><input id="f1" list="dl" value="${esc(sub(l.sub)?.name||'')}"><datalist id="dl">${S.subs.map(s=>`<option value="${esc(s.name)}">`).join('')}</datalist>
+ <label>${t.day}</label><select id="f2">${t.days.map((d,i)=>`<option value="${i}"${i==l.day?' selected':''}>${d}</option>`).join('')}</select>
+ <label>${t.start}</label><select id="f3">${hourOpts(0,23,l.h)}</select><label>${t.len}</label><input id="f4" type="number" min="1" max="12" value="${l.len}">
+ <label>${t.note}</label><input id="f5" value="${esc(l.note)}">
+ ${id?`<h4>${t.lessonHomework} · ${fmt(new Date(key+'T12:00:00'),{day:'numeric',month:'long'})}</h4><div id="lessonTasks" class="homework-list">${lessonTasks()}</div>`:''}
+ <div class="row" style="margin-top:14px"><button class="pri" id="ok">${t.save}</button><button id="no">${t.cancel}</button>${id?`<button id="rm" style="margin-left:auto">${t.del}</button>`:''}</div></div>`;
+ document.body.appendChild(ov);const q=s=>ov.querySelector(s),close=()=>ov.remove();
+ ov.onclick=e=>{if(e.target===ov)close()};q('#no').onclick=close;
+ if(id){
+  q('#rm').onclick=()=>{tr.lessons=tr.lessons.filter(x=>x.id!==id);S.tasks.forEach(k=>{if(k.lessonId===id){delete k.lessonId;delete k.lessonDate}});save();close();render()};
+  ov.addEventListener('click',e=>{const a=e.target.closest('[data-a]');if(!a)return;e.stopPropagation();if(a.dataset.a==='editTask'){close();taskEditModal(a.dataset.id)}else if(a.dataset.a==='deltask'){S.tasks=S.tasks.filter(k=>k.id!==a.dataset.id);save();q('#lessonTasks').innerHTML=lessonTasks();render()}});
+  ov.addEventListener('change',e=>{const a=e.target;if(a.dataset.a!=='done')return;e.stopPropagation();const k=S.tasks.find(k=>k.id===a.dataset.id);if(k){k.done=a.checked;save();q('#lessonTasks').innerHTML=lessonTasks();render()}});
+ }
+ q('#ok').onclick=()=>{const name=q('#f1').value.trim();if(!name)return;let s=S.subs.find(x=>x.name.toLowerCase()===name.toLowerCase());
+  if(!s){s={id:uid(),name,color:PAL[S.subs.length%PAL.length],notes:[]};S.subs.push(s)}
+  const o={id:id||uid(),sub:s.id,day:+q('#f2').value,h:+q('#f3').value,len:Math.max(1,+q('#f4').value||1),note:q('#f5').value.trim()};
+  if(id){Object.assign(l,o);S.tasks.filter(k=>k.lessonId===id).forEach(k=>k.sub=s.id)}else tr.lessons.push(o);save();close();render()}}
+
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const a=el.dataset.a,id=el.dataset.id,card=el.closest('.card'),sid=card?.dataset.s,s=sid&&sub(sid);
+ if(a==='cell'){const r=el.getBoundingClientRect(),start=+el.dataset.start,end=+el.dataset.end,hour=Math.max(start,Math.min(end-1,start+Math.floor((e.clientY-r.top)/H)));
+  cellActionModal(+el.dataset.day,hour);return}
+ if(a==='tab'){tab=el.dataset.t}
+ else if(a==='prev')off--;else if(a==='next')off++;else if(a==='today')off=0;
+ else if(a==='addL'){lessonModal(null,0,S.set.sh);return}
+ else if(a==='editL'){lessonActionModal(id,el.dataset.date);return}
+ else if(a==='editTask'){taskEditModal(id);return}
+ else if(a==='openhomework'){if(el===card&&e.target.closest('button,input,textarea,select,.task,.note'))return;homeworkModal(sid);return}
+ else if(a==='addhomework'){const subject=document.getElementById('hwSubject').value,title=document.getElementById('hwTitle').value.trim(),due=document.getElementById('hwDue').value;if(!subject||!title)return;
+  S.tasks.push({id:uid(),sub:subject,title,due:due?new Date(due).toISOString():null,prio:document.getElementById('hwPriority').value,done:false});save()}
+ else if(a==='addsub'){const i=document.getElementById('ns'),v=i.value.trim();if(!v)return;S.subs.push({id:uid(),name:v,color:PAL[S.subs.length%PAL.length],notes:[]});save()}
+ else if(a==='delsub'){if(!confirm(T().confirm))return;S.subs=S.subs.filter(x=>x.id!==sid);S.tasks=S.tasks.filter(x=>x.sub!==sid);S.tri.forEach(x=>x.lessons=x.lessons.filter(l=>l.sub!==sid));save()}
+ else if(a==='done'){const k=S.tasks.find(x=>x.id===id);if(k){k.done=el.checked;save()}}
+ else if(a==='deltask'){S.tasks=S.tasks.filter(x=>x.id!==id);save()}
+ else if(a==='addnote'){const v=card.querySelector('.nt').value.trim();if(!v)return;(s.notes=s.notes||[]).push({id:uid(),text:v});save()}
+ else if(a==='delnote'){s.notes=s.notes.filter(x=>x.id!==id);save()}
+ else if(a==='addtri'){const n={id:uid(),name:T().tri+' '+(S.tri.length+1),lessons:[]};S.tri.push(n);S.cur=n.id;save()}
+ else if(a==='deltri'){if(S.tri.length<2||!confirm(T().confirm))return;S.tri=S.tri.filter(x=>x.id!==S.cur);S.cur=S.tri[0].id;save()}
+ else return;
+ render()});
+
+document.addEventListener('change',e=>{const el=e.target;
+ if(el.dataset.a==='tri'){S.cur=el.value;save();render()}
+ else if(el.dataset.a==='color'){sub(el.closest('.card').dataset.s).color=el.value;save();render()}
+ else if(el.dataset.a==='rentri'){tri().name=el.value.trim()||tri().name;save()}
+ else if(el.dataset.k){const k=el.dataset.k,s=S.set;
+  if(k==='notif'){s.notif=el.checked;if(el.checked&&window.Notification)Notification.requestPermission()}
+  else{s[k]=(k==='sh'||k==='eh')?+el.value:el.value;if(s.eh<=s.sh){k==='sh'?s.eh=s.sh+1:s.sh=s.eh-1}}
+  save();render()}
+ else if(el.dataset.a==='done'){}});
+const seen=new Set();
+setInterval(()=>{document.querySelectorAll('[data-due]').forEach(e=>{e.textContent=cd(e.dataset.due);e.classList.toggle('late',new Date(e.dataset.due)<Date.now())});
+ if(S.set.notif&&window.Notification&&Notification.permission==='granted')S.tasks.forEach(k=>{const ms=new Date(k.due)-Date.now();
+  if(!k.done&&ms>0&&ms<36e5&&!seen.has(k.id)){seen.add(k.id);try{new Notification(k.title,{body:cd(k.due)})}catch(e){}}})},1000);
+render();
+</script>
+</body>
+</html>
